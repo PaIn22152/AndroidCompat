@@ -15,5 +15,6 @@ public class MainActivity extends AppCompatActivity {
         flashlightCompat.init(this);
         flashlightCompat.on();
 
+
     }
 }

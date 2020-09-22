@@ -15,6 +15,8 @@ import androidx.annotation.RequiresApi;
  * Author     Payne.
  * About      类描述：
  * 手电筒实现类，[api-23,
+ * 需要权限  android.Manifest.permission.CAMERA
+ * 在这个类里面只判断是否有必要权限，不做权限申请处理
  */
 @RequiresApi(api = VERSION_CODES.M)
 class FlashlightImpl_23 implements FlashlightInterface {

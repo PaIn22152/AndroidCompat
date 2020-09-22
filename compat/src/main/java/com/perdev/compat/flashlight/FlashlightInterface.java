@@ -9,7 +9,7 @@ import android.content.Context;
  * Author     Payne.
  * About      类描述：
  */
-public interface FlashlightInterface {
+interface FlashlightInterface {
 
     void init(Context context);//初始化
 

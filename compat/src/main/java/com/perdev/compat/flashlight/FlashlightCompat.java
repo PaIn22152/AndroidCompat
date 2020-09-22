@@ -9,9 +9,9 @@ import android.os.Build.VERSION;
  * Date       2020/09/22 - 16:08
  * Author     Payne.
  * About      类描述：
+ * flashlight兼容类，使用组合+工厂实现，该类对外提供接口
  */
-public class FlashlightCompat implements FlashlightInterface {
-
+public class FlashlightCompat {
 
     private FlashlightInterface mFlashlightCompat;
 
@@ -25,54 +25,31 @@ public class FlashlightCompat implements FlashlightInterface {
         }
     }
 
-    @Override
     public void init(Context context) {
-        if (mFlashlightCompat != null) {
-            mFlashlightCompat.init(context);
-        }
-
+        mFlashlightCompat.init(context);
     }
 
-    @Override
     public void on() {
-        if (mFlashlightCompat != null) {
-            mFlashlightCompat.on();
-        }
+        mFlashlightCompat.on();
     }
 
-    @Override
     public void off() {
-        if (mFlashlightCompat != null) {
-            mFlashlightCompat.off();
-        }
+        mFlashlightCompat.off();
     }
 
-    @Override
     public boolean getState() {
-        if (mFlashlightCompat != null) {
-            return mFlashlightCompat.getState();
-        }
-        return false;
+        return mFlashlightCompat.getState();
     }
 
-    @Override
     public void listenStateChange(OnStateChangeListener listener) {
-        if (mFlashlightCompat != null) {
-            mFlashlightCompat.listenStateChange(listener);
-        }
+        mFlashlightCompat.listenStateChange(listener);
     }
 
-    @Override
     public void listenError(OnErrorListener listener) {
-        if (mFlashlightCompat != null) {
-            mFlashlightCompat.listenError(listener);
-        }
+        mFlashlightCompat.listenError(listener);
     }
 
-    @Override
     public void destroy() {
-        if (mFlashlightCompat != null) {
-            mFlashlightCompat.destroy();
-        }
+        mFlashlightCompat.destroy();
     }
 }
