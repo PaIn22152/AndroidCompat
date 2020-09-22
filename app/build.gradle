@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.perdev.compat.demoapp"//应用包名和项目路径区别开
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "androidCompat_demo_${releaseTime()}.apk"
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+
+}
+
+static def releaseTime() {
+    return new Date().format("MMddHHmm", TimeZone.getDefault())
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //compat module
+    implementation project(path: ':compat')
+
+
+    //RXJava
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVer"
+    //RXAndroid
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVer"
+
+    //androidx
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat"
+    implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintLayout"
+
+
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+
+    //ButterKnife
+    implementation "com.jakewharton:butterknife:$butterKnifeVer"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVer"
+
+
+    implementation "androidx.multidex:multidex:$multidex_version"
+
+
+}
+
+//apply plugin: 'io.objectbox' // Apply last.
+
