@@ -3,8 +3,6 @@ package com.perdev.compat.flashlight;
 import android.content.Context;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
-import android.os.Build.VERSION_CODES;
-import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
@@ -14,12 +12,12 @@ import androidx.annotation.RequiresApi;
  * Date       2020/09/22 - 15:52
  * Author     Payne.
  * About      类描述：
- * 手电筒实现类，[api-23,
+ * 手电筒实现类，[api-23,]
  * 需要权限  android.Manifest.permission.CAMERA
  * 在这个类里面只判断是否有必要权限，不做权限申请处理
  */
-@RequiresApi(api = VERSION_CODES.M)
-class FlashlightImpl_23 implements FlashlightInterface {
+@RequiresApi(api = 23)
+class FlashlightImpl_23_up implements IFlashlight {
 
     private boolean                     mState = false;
     private Context                     mContext;
@@ -44,6 +42,7 @@ class FlashlightImpl_23 implements FlashlightInterface {
                 }
             }
         };
+        mCameraManager.registerTorchCallback(mTorchCallback, null);
     }
 
     private void setTorchMode(boolean state) {
@@ -60,12 +59,16 @@ class FlashlightImpl_23 implements FlashlightInterface {
                         && lensFacing == CameraCharacteristics.LENS_FACING_BACK) {
                     //打开或关闭手电筒
                     mCameraManager.setTorchMode(id, state);
+                } else {
+                    if (mErrorListener != null) {
+                        mErrorListener.onError("setTorchMode. Not support flashlight!");
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
             if (mErrorListener != null) {
-                mErrorListener.onError("setTorchMode Exception e = " + e);
+                mErrorListener.onError("setTorchMode(). Exception e = " + e);
             }
         }
     }
@@ -92,11 +95,11 @@ class FlashlightImpl_23 implements FlashlightInterface {
 
     @Override
     public void listenError(OnErrorListener listener) {
-
+        mErrorListener = listener;
     }
 
     @Override
-    public void destroy() {
+    public void release() {
         if (mCameraManager != null && mTorchCallback != null) {
             mCameraManager.unregisterTorchCallback(mTorchCallback);
         }

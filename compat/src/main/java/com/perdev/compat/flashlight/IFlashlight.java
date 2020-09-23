@@ -9,7 +9,7 @@ import android.content.Context;
  * Author     Payne.
  * About      类描述：
  */
-interface FlashlightInterface {
+interface IFlashlight {
 
     void init(Context context);//初始化
 
@@ -23,6 +23,6 @@ interface FlashlightInterface {
 
     void listenError(OnErrorListener listener);//监听发生的错误
 
-    void destroy();//回收资源
+    void release();//释放回收资源
 
 }

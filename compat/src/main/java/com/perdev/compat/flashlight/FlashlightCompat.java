@@ -13,15 +13,15 @@ import android.os.Build.VERSION;
  */
 public class FlashlightCompat {
 
-    private FlashlightInterface mFlashlightCompat;
+    private IFlashlight mFlashlightCompat;
 
     public FlashlightCompat() {
+        //目前适配了api22及其以下版本 和 api23及其以上版本 两种机型
+        //当有新的需要适配的机型时，新建实现类实现IFlashlight接口，并在此判断机型，使用新的实现类
         if (VERSION.SDK_INT >= 23) {
-            mFlashlightCompat = new FlashlightImpl_23();
-        } else if (VERSION.SDK_INT >= 21) {
-            mFlashlightCompat = new FlashlightImpl_21_22();
+            mFlashlightCompat = new FlashlightImpl_23_up();
         } else {
-            mFlashlightCompat = new FlashlightImpl_16_20();
+            mFlashlightCompat = new FlashlightImpl_22_low();
         }
     }
 
@@ -49,7 +49,7 @@ public class FlashlightCompat {
         mFlashlightCompat.listenError(listener);
     }
 
-    public void destroy() {
-        mFlashlightCompat.destroy();
+    public void release() {
+        mFlashlightCompat.release();
     }
 }
